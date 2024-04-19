@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
 
 public class ChatController {
     @FXML
@@ -14,13 +15,24 @@ public class ChatController {
     private TextField MessageInp;
     @FXML
     private Button SendButton;
-
     @FXML
-    private void sendMsg(ActionEvent event) {
+    private void initialize(){
+        MessageInp.setOnKeyPressed(event -> {
+            if (event.getCode() == KeyCode.ENTER){
+                sendMsg();
+            }
+        });
+    }
+    @FXML
+    private void sendMsg() {
         String message = MessageInp.getText();
         if (!message.isEmpty()){
             Display.appendText(message+"\n");
             MessageInp.clear();
         }
+    }
+    @FXML
+    private void handleSendButtonAction(){
+        sendMsg();
     }
 }
